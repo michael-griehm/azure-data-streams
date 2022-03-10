@@ -12,9 +12,9 @@ on:
   workflow_dispatch:
 
 env:
-  REMOTE_STATE_RG: rg-data-model-demo-eastus2
-  REMOTE_STATE_SA: sadatamodeled
-  REMOTE_STATE_CONTAINER: data-model-remote-state-eastus2-demo
+  REMOTE_STATE_RG: asa-demo-eastus2
+  REMOTE_STATE_SA: tfasaed
+  REMOTE_STATE_CONTAINER: asa-remote-state-eastus2-demo
   ARM_TENANT_ID: ${{ secrets.TENANT_ID }}
   ARM_SUBSCRIPTION_ID: ${{ secrets.SUBSCRIPTION_ID }}
   ARM_CLIENT_ID: ${{ secrets.CLIENT_ID }}
