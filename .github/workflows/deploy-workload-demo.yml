@@ -46,20 +46,20 @@ jobs:
         uses: azure/get-keyvault-secrets@v1
         with:
           keyvault: ${{ secrets.DEPLOYER_KEY_VAULT }}
-          secrets: 'sadatamodeled-access-key, data-model-demo-eastus2-deployer'
+          secrets: 'asa-demo-eastus2-deployer, tfasaed-access-key'
       - name: 'Setup Terraform'
         uses: hashicorp/setup-terraform@v1
       - name: 'Terraform Init'
         env: 
           TF_CLI_ARGS_init: "-backend-config='resource_group_name=${{env.REMOTE_STATE_RG}}' -backend-config='storage_account_name=${{env.REMOTE_STATE_SA}}' -backend-config='container_name=${{env.REMOTE_STATE_CONTAINER}}' -backend-config='key=${{env.REMOTE_STATE_KEY}}'"
-          ARM_ACCESS_KEY: ${{ steps.get-deployer-secret.outputs.sadatamodeled-access-key }}
+          ARM_ACCESS_KEY: ${{ steps.get-deployer-secret.outputs.tfasaed-access-key}}
         run: terraform init
       - name: 'Terraform Validate'
         run: terraform validate
       - name: 'Terraform Plan'
         env:        
-          ARM_CLIENT_SECRET: ${{ steps.get-deployer-secret.outputs.data-model-demo-eastus2-deployer }}
-          ARM_ACCESS_KEY: ${{ steps.get-deployer-secret.outputs.sadatamodeled-access-key }}
+          ARM_CLIENT_SECRET: ${{ steps.get-deployer-secret.outputs.asa-demo-eastus2-deployer }}
+          ARM_ACCESS_KEY: ${{ steps.get-deployer-secret.outputs.tfasaed-access-key }}
         run: terraform plan -out="./key-vaults.tfplan"
       - name: 'Upload Plan'
         uses: actions/upload-artifact@v2
@@ -94,13 +94,13 @@ jobs:
         uses: azure/get-keyvault-secrets@v1
         with:
           keyvault: ${{ secrets.DEPLOYER_KEY_VAULT }}
-          secrets: 'sadatamodeled-access-key, data-model-demo-eastus2-deployer'
+          secrets: 'asa-demo-eastus2-deployer, tfasaed-access-key'
       - name: 'Setup Terraform'
         uses: hashicorp/setup-terraform@v1
       - name: 'Terraform Init'
         env: 
           TF_CLI_ARGS_init: "-backend-config='resource_group_name=${{env.REMOTE_STATE_RG}}' -backend-config='storage_account_name=${{env.REMOTE_STATE_SA}}' -backend-config='container_name=${{env.REMOTE_STATE_CONTAINER}}' -backend-config='key=${{env.REMOTE_STATE_KEY}}'"
-          ARM_ACCESS_KEY: ${{ steps.get-deployer-secret.outputs.sadatamodeled-access-key }}
+          ARM_ACCESS_KEY: ${{ steps.get-deployer-secret.outputs.tfasaed-access-key}}
         working-directory: ./iac/key-vaults
         run: terraform init
       - name: 'Download Plan'
@@ -116,8 +116,8 @@ jobs:
           failOnError: false
       - name:  'Terraform Apply'
         env:
-          ARM_CLIENT_SECRET: ${{ steps.get-deployer-secret.outputs.data-model-demo-eastus2-deployer }}
-          ARM_ACCESS_KEY: ${{ steps.get-deployer-secret.outputs.sadatamodeled-access-key }}
+          ARM_CLIENT_SECRET: ${{ steps.get-deployer-secret.outputs.asa-demo-eastus2-deployer }}
+          ARM_ACCESS_KEY: ${{ steps.get-deployer-secret.outputs.tfasaed-access-key }}
         working-directory: ./iac/key-vaults
         run: terraform apply -auto-approve "./key-vaults.tfplan"
       - name: 'Azure CLI logout'
@@ -150,20 +150,20 @@ jobs:
         uses: azure/get-keyvault-secrets@v1
         with:
           keyvault: ${{ secrets.DEPLOYER_KEY_VAULT }}
-          secrets: 'sadatamodeled-access-key, data-model-demo-eastus2-deployer'
+          secrets: 'asa-demo-eastus2-deployer, tfasaed-access-key'
       - name: 'Setup Terraform'
         uses: hashicorp/setup-terraform@v1
       - name: 'Terraform Init'
         env: 
           TF_CLI_ARGS_init: "-backend-config='resource_group_name=${{env.REMOTE_STATE_RG}}' -backend-config='storage_account_name=${{env.REMOTE_STATE_SA}}' -backend-config='container_name=${{env.REMOTE_STATE_CONTAINER}}' -backend-config='key=${{env.REMOTE_STATE_KEY}}'"
-          ARM_ACCESS_KEY: ${{ steps.get-deployer-secret.outputs.sadatamodeled-access-key }}
+          ARM_ACCESS_KEY: ${{ steps.get-deployer-secret.outputs.tfasaed-access-key}}
         run: terraform init
       - name: 'Terraform Validate'
         run: terraform validate
       - name: 'Terraform Plan'
         env:        
-          ARM_CLIENT_SECRET: ${{ steps.get-deployer-secret.outputs.data-model-demo-eastus2-deployer }}
-          ARM_ACCESS_KEY: ${{ steps.get-deployer-secret.outputs.sadatamodeled-access-key }}
+          ARM_CLIENT_SECRET: ${{ steps.get-deployer-secret.outputs.asa-demo-eastus2-deployer }}
+          ARM_ACCESS_KEY: ${{ steps.get-deployer-secret.outputs.tfasaed-access-key }}
           TF_VAR_coin_api_key_app_setting: ${{ secrets.COIN_API_KEY_APP_SETTING }}
           TF_VAR_sql_admin_login: ${{ secrets.SQL_SERVER_ADMIN }}
         run: terraform plan -out="./workload.tfplan"
@@ -200,13 +200,13 @@ jobs:
         uses: azure/get-keyvault-secrets@v1
         with:
           keyvault: ${{ secrets.DEPLOYER_KEY_VAULT }}
-          secrets: 'sadatamodeled-access-key, data-model-demo-eastus2-deployer'
+          secrets: 'asa-demo-eastus2-deployer, tfasaed-access-key'
       - name: 'Setup Terraform'
         uses: hashicorp/setup-terraform@v1
       - name: 'Terraform Init'
         env: 
           TF_CLI_ARGS_init: "-backend-config='resource_group_name=${{env.REMOTE_STATE_RG}}' -backend-config='storage_account_name=${{env.REMOTE_STATE_SA}}' -backend-config='container_name=${{env.REMOTE_STATE_CONTAINER}}' -backend-config='key=${{env.REMOTE_STATE_KEY}}'"
-          ARM_ACCESS_KEY: ${{ steps.get-deployer-secret.outputs.sadatamodeled-access-key }}
+          ARM_ACCESS_KEY: ${{ steps.get-deployer-secret.outputs.tfasaed-access-key}}
         working-directory: ./iac/workload
         run: terraform init
       - name: 'Download Plan'
@@ -222,8 +222,8 @@ jobs:
           failOnError: false
       - name:  'Terraform Apply'
         env:
-          ARM_CLIENT_SECRET: ${{ steps.get-deployer-secret.outputs.data-model-demo-eastus2-deployer }}
-          ARM_ACCESS_KEY: ${{ steps.get-deployer-secret.outputs.sadatamodeled-access-key }}
+          ARM_CLIENT_SECRET: ${{ steps.get-deployer-secret.outputs.asa-demo-eastus2-deployer }}
+          ARM_ACCESS_KEY: ${{ steps.get-deployer-secret.outputs.tfasaed-access-key }}
         working-directory: ./iac/workload
         run: terraform apply -auto-approve "./workload.tfplan"
       - name: 'Azure CLI logout'
