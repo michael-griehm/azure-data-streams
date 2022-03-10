@@ -17,7 +17,7 @@ resource "azurerm_eventhub" "eh" {
   name                = "eh-crypto-stream"
   namespace_name      = azurerm_eventhub_namespace.ehns.name
   resource_group_name = data.azurerm_resource_group.rg.name
-  partition_count     = 32
+  partition_count     = 2
   message_retention   = 1
 }
 

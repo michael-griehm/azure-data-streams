@@ -38,7 +38,7 @@ namespace DataModel.Demo
 
                 string json = JsonConvert.SerializeObject(streamEvent);
 
-                log.LogInformation($"Sending event: {json}");
+                log.LogDebug($"Sending event: {json}");
 
                 await outputEvents.AddAsync(json);
 
