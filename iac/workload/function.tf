@@ -1,6 +1,6 @@
 data "azurerm_key_vault" "fn_vault" {
   resource_group_name = data.azurerm_resource_group.rg.name
-  name                = "fn-stream-producers"
+  name                = "fnstreamproducers"
 }
 
 resource "azurerm_storage_account" "fn_sa" {

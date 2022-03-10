@@ -13,7 +13,7 @@ resource "azurerm_key_vault" "sql_vault" {
   resource_group_name         = data.azurerm_resource_group.rg.name
   location                    = data.azurerm_resource_group.rg.location
   tenant_id                   = data.azurerm_client_config.current.tenant_id
-  name                        = "sql-alert-meta"
+  name                        = "sqlalertmeta"
   enabled_for_disk_encryption = true
   soft_delete_retention_days  = 7
   purge_protection_enabled    = false

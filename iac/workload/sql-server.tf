@@ -23,7 +23,7 @@ resource "random_password" "password" {
 
 data "azurerm_key_vault" "sql_vault" {
   resource_group_name = data.azurerm_resource_group.rg.name
-  name                = "sql-alert-meta"
+  name                = "sqlalertmeta"
 }
 
 resource "azurerm_key_vault_secret" "stored_secret" {
