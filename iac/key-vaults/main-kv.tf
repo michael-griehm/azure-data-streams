@@ -42,11 +42,10 @@ locals {
   a_name         = replace(var.app_name, "-", "")
   fqrn           = "${var.app_name}-${var.env}-${local.loc}"
   fqrn_no_dashes = "${local.a_name}-${var.env}-${local.loc}"
-  rg_name        = "rg-${local.fqrn}"
 }
 
 data "azurerm_client_config" "current" {}
 
 data "azurerm_resource_group" "rg" {
-  name = local.rg_name
+  name = local.fqrn
 }
