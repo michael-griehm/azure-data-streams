@@ -16,7 +16,7 @@ provider "azurerm" {
 }
 
 variable "app_name" {
-  default   = "data-model"
+  default   = "asa"
   type      = string
   sensitive = false
 }
@@ -35,7 +35,8 @@ variable "tags" {
   type = map(string)
 
   default = {
-    environment = "Demo"
+    environment = "demo"
+    workload    = "crypto-analytics"
   }
 }
 
