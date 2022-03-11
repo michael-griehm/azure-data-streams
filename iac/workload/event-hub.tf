@@ -1,3 +1,8 @@
+data "azurerm_storage_account" "adls" {
+  name                = "crypto-quotes"
+  resource_group_name = "adls2-demo-eastus2"
+}
+
 resource "azurerm_eventhub_namespace" "ehns" {
   name                = "ehns-quote-streams"
   location            = data.azurerm_resource_group.rg.location
@@ -6,6 +11,10 @@ resource "azurerm_eventhub_namespace" "ehns" {
   capacity            = 1
   zone_redundant      = true
   tags                = var.tags
+
+  identity {
+    type = "SystemAssigned"
+  }
 
   network_rulesets {
     default_action                 = "Allow"
