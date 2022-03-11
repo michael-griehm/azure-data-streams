@@ -1,7 +1,7 @@
-data "azurerm_storage_account" "adls" {
-  name                = "crypto-quotes"
-  resource_group_name = "adls2-demo-eastus2"
-}
+# data "azurerm_storage_account" "adls" {
+#   name                = "cryptoanalyticslake"
+#   resource_group_name = "adls2-demo-eastus2"
+# }
 
 resource "azurerm_eventhub_namespace" "ehns" {
   name                = "ehns-quote-streams"
