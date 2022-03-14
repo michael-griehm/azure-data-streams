@@ -271,9 +271,16 @@ jobs:
     name: 'buld and deploy db'
     needs: build-and-deploy-function
     runs-on: windows-latest
+    defaults:
+      run:
+        working-directory: db
     steps:
       - name: 'Checkout Repo'
         uses: actions/checkout@v2
+      - name: 'Setup .NET Environment' 
+        uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: '3.1.x'
       - name: 'Azure Login'
         uses: azure/login@v1
         with:
@@ -286,13 +293,13 @@ jobs:
         with:
           keyvault: sqlalertmeta
           secrets: 'TradeAlerts'
+      - name: 'Build dacpac'
+        run: dotnet build --output ./dacpac
       - uses: azure/sql-action@v1
         with:
           server-name: sql-alert-meta.database.windows.net
           connection-string: ${{ steps.get-connection-string.outputs.TradeAlerts }}
-          project-file: './sqlpropj/TradeAlerts.sqlproj'
-          build-arguments: '-c Release'                 # Optional arguments passed to dotnet build
-          arguments: '/p:DropObjectsNotInSource=true'   # Optional parameters for SqlPackage Publish
+          dacpac-package: './db/dacpac/db.dacpac'
       - name: 'Azure CLI logout'
         uses: azure/CLI@v1
         with:
