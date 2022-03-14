@@ -271,7 +271,7 @@ jobs:
   build-and-deploy-db:
     name: 'buld and deploy db'
     needs: build-and-deploy-function
-    runs-on: ubuntu-latest
+    runs-on: windows-latest
     defaults:
       run:
         working-directory: db
@@ -302,9 +302,7 @@ jobs:
           connection-string: ${{ steps.get-connection-string.outputs.TradeAlerts }}
           dacpac-package: './db/dacpac/db.dacpac'
       - name: 'Azure CLI logout'
-        uses: azure/CLI@v1
+        uses: azure/powershell@v1
         with:
           inlineScript: |
-            az logout
-            az cache purge
-            az account clear
+            Disconnect-AzAccount
