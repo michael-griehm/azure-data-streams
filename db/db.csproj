@@ -10,6 +10,7 @@
     </PropertyGroup>
 
     <ItemGroup>
+        <PreDeploy Include="Pre-Deployment\Script.PreDeployment.sql" />
         <PostDeploy Include="Post-Deployment\Script.PostDeployment.sql" />
     </ItemGroup>
 </Project>

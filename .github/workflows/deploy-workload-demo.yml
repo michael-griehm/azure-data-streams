@@ -271,7 +271,7 @@ jobs:
   build-and-deploy-db:
     name: 'buld and deploy db'
     needs: build-and-deploy-function
-    runs-on: windows-latest
+    runs-on: ubuntu-latest
     defaults:
       run:
         working-directory: db
@@ -306,3 +306,5 @@ jobs:
         with:
           inlineScript: |
             az logout
+            az cache purge
+            az account clear
