@@ -30,19 +30,19 @@ resource "azurerm_eventhub" "eh" {
   message_retention   = 1
 
   capture_description {
-    enabled = true
-    encoding = "Avro"
+    enabled             = true
+    encoding            = "Avro"
     interval_in_seconds = 60
     size_limit_in_bytes = 10485760
     skip_empty_archives = false
 
     destination {
-      name = "EventHubArchive.AzureBlockBlob"
+      name                = "EventHubArchive.AzureBlockBlob"
       archive_name_format = "{Namespace}/{EventHub}/{PartitionId}/{Year}/{Month}/{Day}/{Hour}/{Minute}/{Second}"
       blob_container_name = "crypto-quotes"
-      storage_account_id = data.azurerm_storage_account.adls.id
+      storage_account_id  = data.azurerm_storage_account.adls.id
     }
-  } 
+  }
 }
 
 resource "azurerm_eventhub_authorization_rule" "producer" {

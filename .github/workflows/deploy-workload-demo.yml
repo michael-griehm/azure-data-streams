@@ -233,7 +233,7 @@ jobs:
             az logout
             az cache purge
             az account clear
-  build-and-deploy:
+  build-and-deploy-function:
     name: 'build and deploy function'
     needs: apply-workload
     runs-on: ubuntu-latest
@@ -267,3 +267,28 @@ jobs:
             az logout
             az cache purge
             az account clear
+  build-and-deploy-db:
+    name: 'buld and deploy db'
+    needs: build-and-deploy-function
+    runs-on: ubuntu-latest
+    steps:
+      - name: 'Checkout Repo'
+        uses: actions/checkout@v2
+      - name: 'Azure Login'
+        uses: azure/login@v1
+        with:
+          tenant-id: ${{ secrets.TENANT_ID }}
+          subscription-id: ${{ secrets.SUBSCRIPTION_ID }}
+          client-id: ${{ secrets.CLIENT_ID }}
+      - name: 'Get connection String'
+        id: get-connection-string
+        uses: azure/get-keyvault-secrets@v1
+        with:
+          keyvault: ${{ secrets.DEPLOYER_KEY_VAULT }}
+          secrets: 'TradeAlerts'
+      - uses: azure/sql-action@v1
+        with:        
+          connection-string: ${{ steps.get-connection-string.outputs.TradeAlerts }}
+          project-file: './sqlpropj/TradeAlerts.sqlproj'
+          build-arguments: '-c Release'                 # Optional arguments passed to dotnet build
+          arguments: '/p:DropObjectsNotInSource=true'   # Optional parameters for SqlPackage Publish

@@ -69,3 +69,9 @@ resource "azurerm_sql_active_directory_administrator" "aad" {
   tenant_id           = data.azurerm_client_config.current.tenant_id
   object_id           = data.azuread_user.sql_admin_user_account.object_id
 }
+
+resource "azurerm_key_vault_secret" "db_connection_string_secret" {
+  name         = azurerm_sql_database.db.name
+  value        = "Server=tcp:${azurerm_sql_server.sql.fully_qualified_domain_name},1433;Initial Catalog=${azurerm_sql_database.db.name};Persist Security Info=False;User ID=${azurerm_sql_server.sql.administrator_login};Password=${azurerm_sql_server.sql.administrator_login_password};MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;"
+  key_vault_id = data.azurerm_key_vault.sql_vault.id
+}
