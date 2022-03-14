@@ -1,0 +1,5 @@
+CREATE TABLE [dbo].[Users]
+(
+  [Id] BIGINT NOT NULL IDENTITY PRIMARY KEY,
+  [Email] NVARCHAR(100) MASKED WITH (FUNCTION = 'email()')
+)
