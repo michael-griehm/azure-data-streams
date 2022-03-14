@@ -4,9 +4,9 @@ CREATE TABLE [dbo].[CryptoAlerts]
   [UserId] BIGINT NOT NULL FOREIGN KEY REFERENCES Users([Id]),
   [Symbol] NVARCHAR(10) NOT NULL,
   [Name] NVARCHAR(200) NOT NULL,
-  [High] DECIMAL (30,10) NOT NULL,
-  [Low] DECIMAL (30,10) NOT NULL,
-  [PurchasedPrice] DECIMAL (30,10) NOT NULL,
+  [High] DECIMAL (30,10) MASKED WITH (FUNCTION = 'default()') NOT NULL,
+  [Low] DECIMAL (30,10) MASKED WITH (FUNCTION = 'default()') NOT NULL,
+  [PurchasedPrice] DECIMAL (30,10) MASKED WITH (FUNCTION = 'default()') NOT NULL,
   [InsertedOn] DATETIME NOT NULL DEFAULT(GETUTCDATE()),
   [LastModifiedOn] DATETIME NULL
 )

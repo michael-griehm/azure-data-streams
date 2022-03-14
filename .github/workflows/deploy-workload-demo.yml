@@ -7,6 +7,7 @@ on:
       - functions/**
       - iac/**
       - .github/workflows/deploy-workload-demo.yml
+      - db/**
   schedule:
     - cron: "30 12 * * *"
   workflow_dispatch:
@@ -305,5 +306,3 @@ jobs:
         with:
           inlineScript: |
             az logout
-            az cache purge
-            az account clear
