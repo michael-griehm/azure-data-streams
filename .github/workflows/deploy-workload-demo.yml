@@ -287,8 +287,16 @@ jobs:
           keyvault: sqlalertmeta
           secrets: 'TradeAlerts'
       - uses: azure/sql-action@v1
-        with:        
+        with:
+          server-name: sql-alert-meta.database.windows.net
           connection-string: ${{ steps.get-connection-string.outputs.TradeAlerts }}
           project-file: './sqlpropj/TradeAlerts.sqlproj'
           build-arguments: '-c Release'                 # Optional arguments passed to dotnet build
           arguments: '/p:DropObjectsNotInSource=true'   # Optional parameters for SqlPackage Publish
+      - name: 'Azure CLI logout'
+        uses: azure/CLI@v1
+        with:
+          inlineScript: |
+            az logout
+            az cache purge
+            az account clear
