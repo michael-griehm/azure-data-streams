@@ -16,7 +16,7 @@ INSERT INTO [dbo].[Users] (Email)
 VALUES ('griehmmj@gmail.com')
 GO
 
-DECLARE @ AS BIGINT = 0;
+DECLARE @UserId AS BIGINT = 0;
 SELECT @UserId = [Id] FROM [dbo].[Users] WHERE [Email] = 'griehmmj@gmail.com';
 
 IF NOT EXISTS (
@@ -26,7 +26,7 @@ INSERT INTO [dbo].[CryptoAlerts] ([UserId],[Symbol],[Name],[High],[Low],[Purchas
 VALUES (@UserId,'MATIC','Polygon',2.00,1.30,1.90)
 GO
 
-DECLARE @ AS BIGINT = 0;
+DECLARE @UserId AS BIGINT = 0;
 SELECT @UserId = [Id] FROM [dbo].[Users] WHERE [Email] = 'griehmmj@gmail.com';
 
 IF NOT EXISTS (
