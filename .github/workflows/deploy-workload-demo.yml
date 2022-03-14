@@ -8,7 +8,7 @@ on:
       - iac/**
       - .github/workflows/deploy-workload-demo.yml
   schedule:
-    - cron: "30 13 * * *"
+    - cron: "30 12 * * *"
   workflow_dispatch:
 
 env:
