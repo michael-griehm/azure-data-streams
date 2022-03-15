@@ -303,7 +303,7 @@ jobs:
           dacpac-package: './db/dacpac/db.dacpac'
       - name: 'Azure CLI logout'
         uses: azure/powershell@v1
-        azPSVersion: "latest"
         with:
+          azPSVersion: "latest"
           inlineScript: |
             Disconnect-AzAccount
