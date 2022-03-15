@@ -8,5 +8,6 @@ CREATE TABLE [dbo].[CryptoAlerts]
   [Low] DECIMAL (30,10) MASKED WITH (FUNCTION = 'default()') NOT NULL,
   [PurchasedPrice] DECIMAL (30,10) MASKED WITH (FUNCTION = 'default()') NOT NULL,
   [InsertedOn] DATETIME NOT NULL DEFAULT(GETUTCDATE()),
-  [LastModifiedOn] DATETIME NULL
+  [LastModifiedOn] DATETIME NULL,
+  [IsActive] BIT NOT NULL DEFAULT(1)
 )

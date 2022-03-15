@@ -9,7 +9,7 @@ on:
       - .github/workflows/deploy-workload-demo.yml
       - db/**
   schedule:
-    - cron: "30 12 * * *"
+    - cron: "0 12 * * *"
   workflow_dispatch:
 
 env:
@@ -303,6 +303,7 @@ jobs:
           dacpac-package: './db/dacpac/db.dacpac'
       - name: 'Azure CLI logout'
         uses: azure/powershell@v1
+        azPSVersion: "latest"
         with:
           inlineScript: |
             Disconnect-AzAccount
