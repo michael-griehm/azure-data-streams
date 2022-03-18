@@ -72,6 +72,8 @@ resource "azurerm_sql_database" "db" {
   location            = data.azurerm_resource_group.rg.location
   server_name         = azurerm_sql_server.sql.name
   tags                = var.tags
+  create_mode         = "Default"
+  edition             = "Free"
 
   depends_on = [
     azurerm_sql_active_directory_administrator.aad
