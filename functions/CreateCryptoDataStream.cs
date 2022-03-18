@@ -55,7 +55,7 @@ namespace DataModel.Demo
     {
         public string Symbol { get; set; }
         public decimal? Price { get; set; }
-        public DateTime PriceTimeStamp { get => DateTime.Now; }
+        public DateTime PriceTimeStamp { get => DateTime.UtcNow; }
 
         public CrytoAssetStreamEvent(Asset asset)
         {

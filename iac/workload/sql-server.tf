@@ -46,20 +46,12 @@ resource "azurerm_sql_server" "sql" {
   }
 }
 
-resource "azurerm_sql_firewall_rule" "example" {
+resource "azurerm_sql_firewall_rule" "home_firewall_rule" {
   name                = "HomeIP"
   resource_group_name = data.azurerm_resource_group.rg.name
   server_name         = azurerm_sql_server.sql.name
   start_ip_address    = "24.31.171.98"
   end_ip_address      = "24.31.171.98"
-}
-
-resource "azurerm_sql_database" "db" {
-  name                = "TradeAlerts"
-  resource_group_name = data.azurerm_resource_group.rg.name
-  location            = data.azurerm_resource_group.rg.location
-  server_name         = azurerm_sql_server.sql.name
-  tags                = var.tags
 }
 
 resource "azurerm_sql_active_directory_administrator" "aad" {
@@ -68,10 +60,30 @@ resource "azurerm_sql_active_directory_administrator" "aad" {
   login               = "sql-aad-admin"
   tenant_id           = data.azurerm_client_config.current.tenant_id
   object_id           = data.azuread_user.sql_admin_user_account.object_id
+
+  depends_on = [
+    azurerm_sql_firewall_rule.home_firewall_rule
+  ]
+}
+
+resource "azurerm_sql_database" "db" {
+  name                = "TradeAlerts"
+  resource_group_name = data.azurerm_resource_group.rg.name
+  location            = data.azurerm_resource_group.rg.location
+  server_name         = azurerm_sql_server.sql.name
+  tags                = var.tags
+
+  depends_on = [
+    azurerm_sql_active_directory_administrator.aad
+  ]
 }
 
 resource "azurerm_key_vault_secret" "db_connection_string_secret" {
   name         = azurerm_sql_database.db.name
   value        = "Server=tcp:${azurerm_sql_server.sql.fully_qualified_domain_name},1433;Initial Catalog=${azurerm_sql_database.db.name};Persist Security Info=False;User ID=${azurerm_sql_server.sql.administrator_login};Password=${azurerm_sql_server.sql.administrator_login_password};MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;"
   key_vault_id = data.azurerm_key_vault.sql_vault.id
+
+  depends_on = [
+    azurerm_sql_database.db
+  ]
 }

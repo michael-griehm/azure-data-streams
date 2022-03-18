@@ -11,3 +11,4 @@
 - <https://docs.microsoft.com/en-us/dotnet/core/tutorials/library-with-visual-studio-code?pivots=dotnet-6-0>
 - <https://docs.github.com/en/actions/using-github-hosted-runners/about-github-hosted-runners>
 - <https://erikej.github.io/efcore/2020/05/11/ssdt-dacpac-netcore.html>
+- <https://github.com/marketplace/actions/azure-powershell-action>
