@@ -8,8 +8,8 @@ on:
       - iac/**
       - .github/workflows/deploy-workload-demo.yml
       - db/**
-  schedule:
-    - cron: "0 12 * * *"
+  # schedule:
+  #   - cron: "0 12 * * *"
   workflow_dispatch:
 
 env:
