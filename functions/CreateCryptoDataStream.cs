@@ -32,7 +32,7 @@ namespace DataModel.Demo
 
             int i = 0;
 
-            foreach (var asset in assets.Data.Where(x=> x.type_is_crypto))
+            foreach (var asset in assets.Data.Where(x=> x.type_is_crypto && x.price_usd.HasValue))
             {
                 var streamEvent = new CrytoAssetStreamEvent(asset);
 
