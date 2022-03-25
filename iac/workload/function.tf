@@ -25,8 +25,8 @@ resource "azurerm_app_service_plan" "asp" {
   tags                = var.tags
 
   sku {
-    tier = "Dynamic"
-    size = "D1"
+    tier = "Free"
+    size = "F1"
   }
 
   depends_on = [
@@ -53,7 +53,7 @@ resource "azurerm_function_app" "fn" {
 
   site_config {
     always_on                = true
-    dotnet_framework_version = "V4.0"
+    dotnet_framework_version = "v4.0"
     ftps_state               = "FtpsOnly"
     min_tls_version          = "1.2"
   }
