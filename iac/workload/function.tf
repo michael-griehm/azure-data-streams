@@ -51,6 +51,13 @@ resource "azurerm_function_app" "fn" {
   version                    = "~3"
   tags                       = var.tags
 
+  site_config {
+    always_on                = true
+    dotnet_framework_version = "V4.0"
+    ftps_state               = "FtpsOnly"
+    min_tls_version          = "1.2"
+  }
+
   app_settings = {
     "CoinApiKeyAppSetting"         = "${var.coin_api_key_app_setting}"
     "EventHubConnectionAppSetting" = "@Microsoft.KeyVault(SecretUri=${azurerm_key_vault_secret.event_hub_connection.versionless_id})"

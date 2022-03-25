@@ -32,9 +32,9 @@ resource "azurerm_eventhub" "eh" {
   capture_description {
     enabled             = true
     encoding            = "Avro"
-    interval_in_seconds = 60
+    interval_in_seconds = 600
     size_limit_in_bytes = 10485760
-    skip_empty_archives = false
+    skip_empty_archives = true
 
     destination {
       name                = "EventHubArchive.AzureBlockBlob"
