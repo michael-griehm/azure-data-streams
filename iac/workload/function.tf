@@ -26,7 +26,7 @@ resource "azurerm_app_service_plan" "asp" {
 
   sku {
     tier = "Shared"
-    size = "F1"
+    size = "D1"
   }
 
   depends_on = [
