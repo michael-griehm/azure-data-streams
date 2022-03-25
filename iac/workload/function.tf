@@ -25,7 +25,7 @@ resource "azurerm_app_service_plan" "asp" {
   tags                = var.tags
 
   sku {
-    tier = "Free"
+    tier = "Shared"
     size = "F1"
   }
 
