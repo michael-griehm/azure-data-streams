@@ -25,8 +25,8 @@ resource "azurerm_app_service_plan" "asp" {
   tags                = var.tags
 
   sku {
-    tier = "Dynamic"
-    size = "D1"
+    tier = "Standard"
+    size = "B1"
   }
 
   depends_on = [
@@ -51,12 +51,12 @@ resource "azurerm_function_app" "fn" {
   version                    = "~3"
   tags                       = var.tags
 
-  # site_config {
-  #   always_on                = true
-  #   dotnet_framework_version = "v4.0"
-  #   ftps_state               = "FtpsOnly"
-  #   min_tls_version          = "1.2"
-  # }
+  site_config {
+    always_on                = true
+    dotnet_framework_version = "v4.0"
+    ftps_state               = "FtpsOnly"
+    min_tls_version          = "1.2"
+  }
 
   app_settings = {
     "CoinApiKeyAppSetting"         = "${var.coin_api_key_app_setting}"
