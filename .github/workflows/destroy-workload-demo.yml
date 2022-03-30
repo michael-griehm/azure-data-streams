@@ -56,10 +56,3 @@ jobs:
           TF_VAR_coin_api_key_app_setting: ${{ secrets.COIN_API_KEY_APP_SETTING }}
           TF_VAR_sql_admin_login: ${{ secrets.SQL_SERVER_ADMIN }}
         run: terraform destroy -auto-approve
-      - name: 'Azure CLI logout'
-        uses: azure/CLI@v1
-        with:
-          inlineScript: |
-            az logout
-            az cache purge
-            az account clear
