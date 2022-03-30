@@ -68,13 +68,6 @@ jobs:
           name: key-vaults-plan
           path: ./iac/key-vaults/key-vaults.tfplan
           retention-days: 1
-      - name: 'Azure CLI logout'
-        uses: azure/CLI@v1
-        with:
-          inlineScript: |
-            az logout
-            az cache purge
-            az account clear
   apply-key-vaults:
     name: 'apply key vault infrastructure'
     needs: plan-key-vaults
@@ -121,13 +114,6 @@ jobs:
           ARM_ACCESS_KEY: ${{ steps.get-deployer-secret.outputs.tfasaed-access-key }}
         working-directory: ./iac/key-vaults
         run: terraform apply -auto-approve "./key-vaults.tfplan"
-      - name: 'Azure CLI logout'
-        uses: azure/CLI@v1
-        with:
-          inlineScript: |
-            az logout
-            az cache purge
-            az account clear
   plan-workload:
     name: 'plan workload infrastructure'
     needs: apply-key-vaults
@@ -174,13 +160,6 @@ jobs:
           name: workload-plan
           path: ./iac/workload/workload.tfplan
           retention-days: 1
-      - name: 'Azure CLI logout'
-        uses: azure/CLI@v1
-        with:
-          inlineScript: |
-            az logout
-            az cache purge
-            az account clear
   apply-workload:
     name: 'apply workload infrastructure'
     needs: plan-workload
@@ -227,13 +206,6 @@ jobs:
           ARM_ACCESS_KEY: ${{ steps.get-deployer-secret.outputs.tfasaed-access-key }}
         working-directory: ./iac/workload
         run: terraform apply -auto-approve "./workload.tfplan"
-      - name: 'Azure CLI logout'
-        uses: azure/CLI@v1
-        with:
-          inlineScript: |
-            az logout
-            az cache purge
-            az account clear
   build-and-deploy-function:
     name: 'build and deploy function'
     needs: apply-workload
@@ -261,13 +233,6 @@ jobs:
         with:
           app-name: 'fn-quote-stream-producers'
           package: './functions/output'
-      - name: 'Azure CLI logout'
-        uses: azure/CLI@v1
-        with:
-          inlineScript: |
-            az logout
-            az cache purge
-            az account clear
   build-and-deploy-db:
     name: 'buld and deploy db'
     needs: build-and-deploy-function
@@ -301,9 +266,3 @@ jobs:
           server-name: sql-alert-meta.database.windows.net
           connection-string: ${{ steps.get-connection-string.outputs.TradeAlerts }}
           dacpac-package: './db/dacpac/db.dacpac'
-      - name: 'Azure CLI logout'
-        uses: azure/powershell@v1
-        with:
-          azPSVersion: "latest"
-          inlineScript: |
-            Disconnect-AzAccount
