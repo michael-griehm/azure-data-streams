@@ -4,6 +4,12 @@ resource "azurerm_stream_analytics_cluster" "cluster" {
   location            = data.azurerm_resource_group.rg.location
   streaming_capacity  = 36
   tags                = var.tags
+
+  timeouts {
+    create = "2m"
+    update = "2m"
+    delete = "2m"
+  }
 }
 
 resource "azurerm_stream_analytics_job" "crypto_high_alert_job" {

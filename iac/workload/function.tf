@@ -25,7 +25,7 @@ resource "azurerm_app_service_plan" "asp" {
   tags                = var.tags
 
   sku {
-    tier = "Standard"
+    tier = "Basic"
     size = "B1"
   }
 
@@ -59,8 +59,10 @@ resource "azurerm_function_app" "fn" {
   }
 
   app_settings = {
-    "CoinApiKeyAppSetting"         = "${var.coin_api_key_app_setting}"
-    "EventHubConnectionAppSetting" = "@Microsoft.KeyVault(SecretUri=${azurerm_key_vault_secret.event_hub_connection.versionless_id})"
+    "CoinApiKeyAppSetting"            = "${var.coin_api_key_app_setting}"
+    "EventHubConnectionAppSetting"    = "@Microsoft.KeyVault(SecretUri=${azurerm_key_vault_secret.event_hub_connection.versionless_id})"
+    "WEBSITE_ENABLE_SYNC_UPDATE_SITE" = "true"
+    "WEBSITE_RUN_FROM_PACKAGE"        = "1"
   }
 
   identity {
