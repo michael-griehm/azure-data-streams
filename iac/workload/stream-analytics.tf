@@ -1,17 +1,3 @@
-resource "azurerm_stream_analytics_cluster" "cluster" {
-  name                = "realtime-analytics-cluster"
-  resource_group_name = data.azurerm_resource_group.rg.name
-  location            = data.azurerm_resource_group.rg.location
-  streaming_capacity  = 36
-  tags                = var.tags
-
-  timeouts {
-    create = "2m"
-    update = "2m"
-    delete = "2m"
-  }
-}
-
 resource "azurerm_stream_analytics_job" "crypto_high_alert_job" {
   name                                     = "crypto-high-alert-job"
   resource_group_name                      = data.azurerm_resource_group.rg.name
