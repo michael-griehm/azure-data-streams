@@ -64,3 +64,10 @@ resource "azurerm_eventhub_authorization_rule" "consumer" {
   send                = false
   manage              = false
 }
+
+resource "azurerm_eventhub_consumer_group" "stream_analytics_consumer" {
+  name                = "stream-analytics-consumer"
+  namespace_name      = azurerm_eventhub_namespace.ehns.name
+  eventhub_name       = azurerm_eventhub.eh.name
+  resource_group_name = data.azurerm_resource_group.rg.name
+}

@@ -30,8 +30,8 @@ DECLARE @UserId AS BIGINT = 0;
 SELECT @UserId = [Id] FROM [dbo].[Users] WHERE [Email] = 'griehmmj@gmail.com';
 
 IF NOT EXISTS (
-    SELECT * FROM [dbo].[CryptoAlerts] WHERE [UserId] = @UserId AND [Symbol] = 'LRC'
+    SELECT * FROM [dbo].[CryptoAlerts] WHERE [UserId] = @UserId AND [Symbol] = 'EOS'
 )
 INSERT INTO [dbo].[CryptoAlerts] ([UserId],[Symbol],[Name],[High],[Low],[PurchasedPrice])
-VALUES (@UserId,'LRC','Loopring',1.10,0.90,1.02)
+VALUES (@UserId,'EOS','EOS',2.60,2.50,3.16)
 GO
