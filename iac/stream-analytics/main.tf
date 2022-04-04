@@ -40,6 +40,11 @@ variable "tags" {
   }
 }
 
+variable "alert-function-name" {
+  type      = string
+  sensitive = true
+}
+
 variable "alert-function-access-key" {
   type      = string
   sensitive = true

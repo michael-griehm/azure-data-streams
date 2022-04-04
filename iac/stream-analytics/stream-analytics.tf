@@ -30,9 +30,9 @@ resource "azurerm_stream_analytics_stream_input_eventhub" "crypto_stream_input" 
   stream_analytics_job_name    = azurerm_stream_analytics_job.crypto_high_alert_job.name
   resource_group_name          = azurerm_stream_analytics_job.crypto_high_alert_job.resource_group_name
   eventhub_consumer_group_name = azurerm_eventhub_consumer_group.stream_analytics_consumer.name
-  eventhub_name                = azurerm_eventhub.eh.name
-  servicebus_namespace         = azurerm_eventhub_namespace.ehns.name
-  shared_access_policy_key     = azurerm_eventhub_namespace.ehns.default_primary_key
+  eventhub_name                = data.azurerm_eventhub.eh.name
+  servicebus_namespace         = data.azurerm_eventhub_namespace.ehns.name
+  shared_access_policy_key     = data.azurerm_eventhub_namespace.ehns.default_primary_key
   shared_access_policy_name    = "RootManageSharedAccessKey"
 
   serialization {
@@ -45,10 +45,10 @@ resource "azurerm_stream_analytics_reference_input_mssql" "crypto_alert_rules" {
   name                      = "crypto-alert-rules"
   resource_group_name       = azurerm_stream_analytics_job.crypto_high_alert_job.resource_group_name
   stream_analytics_job_name = azurerm_stream_analytics_job.crypto_high_alert_job.name
-  server                    = azurerm_sql_server.sql.fully_qualified_domain_name
-  database                  = azurerm_sql_database.db.name
-  username                  = azurerm_sql_server.sql.administrator_login
-  password                  = azurerm_sql_server.sql.administrator_login_password
+  server                    = data.azurerm_sql_server.sql.fully_qualified_domain_name
+  database                  = data.azurerm_sql_database.db.name
+  username                  = data.azurerm_sql_server.sql.administrator_login
+  password                  = data.azurerm_sql_server.sql.administrator_login_password
   refresh_type              = "RefreshPeriodicallyWithFull"
   refresh_interval_duration = "00:20:00"
   full_snapshot_query       = <<QUERY
@@ -59,20 +59,11 @@ resource "azurerm_stream_analytics_reference_input_mssql" "crypto_alert_rules" {
 QUERY
 }
 
-data "azurerm_function_app_host_keys" "api_key" {
-  name                = azurerm_function_app.fn.name
-  resource_group_name = data.azurerm_resource_group.rg.name
-
-  depends_on = [
-    azurerm_function_app.fn
-  ]
-}
-
 resource "azurerm_stream_analytics_output_function" "crypto_price_alert_output" {
   name                      = "crypto-price-alert-output"
   resource_group_name       = azurerm_stream_analytics_job.crypto_high_alert_job.resource_group_name
   stream_analytics_job_name = azurerm_stream_analytics_job.crypto_high_alert_job.name
-  function_app              = azurerm_function_app.fn.name
-  function_name             = "CryptoPriceAlert"
-  api_key                   = data.azurerm_function_app_host_keys.api_key.default_function_key
+  function_app              = data.azurerm_function_app.fn.name
+  function_name             = var.alert-function-name
+  api_key                   = var.alert-function-access-key
 }

@@ -234,7 +234,7 @@ jobs:
           app-name: 'fn-quote-stream-producers'
           package: './functions/output'
   build-and-deploy-db:
-    name: 'buld and deploy db'
+    name: 'build and deploy db'
     needs: build-and-deploy-function
     runs-on: windows-latest
     defaults:
