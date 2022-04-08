@@ -11,41 +11,50 @@ namespace DataModel.Demo
     public static class CreateCryptoDataStream
     {
         [FunctionName("CreateCryptoDataStream")]
-        public static async Task Run([TimerTrigger("0 */10 * * * *")] TimerInfo myTimer,
+        public static async Task Run([TimerTrigger("0 */5 * * * *")] TimerInfo myTimer,
                                      [EventHub("dest", Connection = "EventHubConnectionAppSetting")]IAsyncCollector<string> outputEvents,
                                      ILogger log)
         {
             log.LogInformation($"C# Timer trigger function CreateCryptoDataStream began executing at: {DateTime.Now}");
 
-            var coinApiKey = System.Environment.GetEnvironmentVariable("CoinApiKeyAppSetting", EnvironmentVariableTarget.Process);
-
-            var coinApiEndpointTester = new CoinApiRestEndpointsTester(coinApiKey)
+            try
             {
-                Log = s => log.LogInformation(s)
-            };
+                var coinApiKey = System.Environment.GetEnvironmentVariable("CoinApiKeyAppSetting", EnvironmentVariableTarget.Process);
 
-            log.LogInformation("Calling the CoinAPI List Asset method");
+                var coinApiEndpointTester = new CoinApiRestEndpointsTester(coinApiKey)
+                {
+                    Log = s => log.LogInformation(s)
+                };
 
-            var assets = await coinApiEndpointTester.Metadata_list_assetsAsync();
+                log.LogInformation("Calling the CoinAPI List Asset method");
 
-            log.LogInformation($"The number of Assets returned: {assets.Data.Count} ");
+                var assets = await coinApiEndpointTester.Metadata_list_assetsAsync();
 
-            int i = 0;
+                log.LogInformation($"The number of Assets returned: {assets.Data.Count} ");
 
-            foreach (var asset in assets.Data.Where(x=> x.type_is_crypto && x.price_usd.HasValue))
-            {
-                var streamEvent = new CrytoAssetStreamEvent(asset);
+                int i = 0;
 
-                string json = JsonConvert.SerializeObject(streamEvent);
+                foreach (var asset in assets.Data.Where(x=> x.type_is_crypto && x.price_usd.HasValue))
+                {
+                    var streamEvent = new CrytoAssetStreamEvent(asset);
 
-                log.LogDebug($"Sending event: {json}");
+                    string json = JsonConvert.SerializeObject(streamEvent);
 
-                await outputEvents.AddAsync(json);
+                    log.LogDebug($"Sending event: {json}");
 
-                i++;
+                    await outputEvents.AddAsync(json);
+
+                    i++;
+                }
+
+                log.LogInformation($"The number of Assets streamed: {assets.Data.Count} ");
             }
+            catch (Exception ex)
+            { 
+                log.LogError(ex, $"The following error message was produced during execution of function CreateCryptoDataStream: {ex.Message}");
 
-            log.LogInformation($"The number of Assets streamed: {assets.Data.Count} ");
+                throw ex;
+            }
 
             log.LogInformation($"C# Timer trigger function CreateCryptoDataStream finished executing at: {DateTime.Now}");
         }
