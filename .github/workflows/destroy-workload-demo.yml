@@ -1,7 +1,7 @@
 name: destroy-workload-demo
 on:
   schedule:
-    - cron: "0 4 * * *"
+    - cron: "0 3 * * *"
   workflow_dispatch:
 
 env:
