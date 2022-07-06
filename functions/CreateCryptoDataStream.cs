@@ -64,12 +64,23 @@ namespace DataModel.Demo
     {
         public string Symbol { get; set; }
         public decimal? Price { get; set; }
+        public string Name { get; set; }
+        public decimal? VolumeLastHourUSD { get; set; }
+        public long? SymbolsCount { get; set; }
+        public long? TradeCount { get; set; }
+        public long? QuoteCount { get; set; }
+
         public DateTime PriceTimeStamp { get => DateTime.UtcNow; }
 
         public CrytoAssetStreamEvent(Asset asset)
         {
             Symbol = asset.asset_id;
             Price = asset.price_usd;
+            Name = asset.name;
+            VolumeLastHourUSD = asset.volume_1hrs_usd;
+            SymbolsCount = asset.data_symbols_count;
+            TradeCount = asset.data_trade_count;
+            QuoteCount = asset.data_quote_count;
         }
     }
 }
