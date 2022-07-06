@@ -95,7 +95,7 @@ resource "azurerm_log_analytics_workspace" "logs" {
   resource_group_name = data.azurerm_resource_group.rg.name
   location            = data.azurerm_resource_group.rg.location
   sku                 = "PerGB2018"
-  retention_in_days   = 7
+  retention_in_days   = 30
   tags                = var.tags
 }
 
@@ -118,7 +118,7 @@ resource "azurerm_monitor_diagnostic_setting" "logs" {
 
     retention_policy {
       enabled = true
-      days    = 7
+      days    = 30
     }
   }
 }
