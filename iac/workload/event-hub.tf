@@ -1,6 +1,6 @@
 data "azurerm_storage_account" "adls" {
-  name                = "cryptoanalyticslake"
-  resource_group_name = "adls2-demo-eastus2"
+  name                = "dltalakehousebronze"
+  resource_group_name = "delta-lakehouse-demo-eastus2"
 }
 
 resource "azurerm_eventhub_namespace" "ehns" {
@@ -39,7 +39,7 @@ resource "azurerm_eventhub" "eh" {
     destination {
       name                = "EventHubArchive.AzureBlockBlob"
       archive_name_format = "{Namespace}/{EventHub}/{PartitionId}/{Year}/{Month}/{Day}/{Hour}/{Minute}/{Second}"
-      blob_container_name = "crypto-quotes"
+      blob_container_name = "crypto-stream"
       storage_account_id  = data.azurerm_storage_account.adls.id
     }
   }
