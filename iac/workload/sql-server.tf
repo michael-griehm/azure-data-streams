@@ -52,6 +52,10 @@ resource "azurerm_sql_firewall_rule" "home_firewall_rule" {
   server_name         = azurerm_sql_server.sql.name
   start_ip_address    = "24.31.171.98"
   end_ip_address      = "24.31.171.98"
+
+  depends_on = [
+    azurerm_sql_server.sql
+  ]
 }
 
 resource "azurerm_sql_active_directory_administrator" "aad" {
