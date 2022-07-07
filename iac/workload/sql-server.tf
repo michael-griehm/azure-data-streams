@@ -16,9 +16,11 @@ data "azuread_user" "sql_admin_user_account" {
 }
 
 resource "random_password" "password" {
-  length           = 16
-  special          = true
-  override_special = "_%@"
+  length      = 24
+  min_lower   = 3
+  min_upper   = 3
+  min_special = 3
+  min_numeric = 3
 }
 
 data "azurerm_key_vault" "sql_vault" {
