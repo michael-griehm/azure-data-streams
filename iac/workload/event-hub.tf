@@ -1,7 +1,7 @@
-data "azurerm_storage_account" "adls" {
-  name                = "dltalakehousebronze"
-  resource_group_name = "delta-lakehouse-demo-eastus2"
-}
+# data "azurerm_storage_account" "adls" {
+#   name                = "dltalakehousebronze"
+#   resource_group_name = "delta-lakehouse-demo-eastus2"
+# }
 
 resource "azurerm_eventhub_namespace" "ehns" {
   name                = "ehns-quote-streams"
