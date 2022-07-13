@@ -29,20 +29,20 @@ resource "azurerm_eventhub" "eh" {
   partition_count     = 2
   message_retention   = 1
 
-  # capture_description {
-  #   enabled             = true
-  #   encoding            = "Avro"
-  #   interval_in_seconds = 600
-  #   size_limit_in_bytes = 10485760
-  #   skip_empty_archives = true
+  capture_description {
+    enabled             = true
+    encoding            = "Avro"
+    interval_in_seconds = 600
+    size_limit_in_bytes = 10485760
+    skip_empty_archives = true
 
-  #   destination {
-  #     name                = "EventHubArchive.AzureBlockBlob"
-  #     archive_name_format = "{Namespace}/{EventHub}/{PartitionId}/{Year}/{Month}/{Day}/{Hour}/{Minute}/{Second}"
-  #     blob_container_name = "crypto-stream"
-  #     storage_account_id  = data.azurerm_storage_account.adls.id
-  #   }
-  # }
+    destination {
+      name                = "EventHubArchive.AzureBlockBlob"
+      archive_name_format = "{Namespace}/{EventHub}/{PartitionId}/{Year}/{Month}/{Day}/{Hour}/{Minute}/{Second}"
+      blob_container_name = "crypto-stream"
+      storage_account_id  = data.azurerm_storage_account.adls.id
+    }
+  }
 }
 
 resource "azurerm_eventhub_authorization_rule" "producer" {
